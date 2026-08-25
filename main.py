@@ -11,7 +11,27 @@ def displayMenu():
     print("5. Gerar Relatório")
     print("6. Sair")
 
-def validarData(dataStr):
+def getEscolhaDoUsuario():
+    while (True):
+        escolha = input()
+        if (1 <= escolha <= 6):
+            break
+        else:
+            print("Alternativa inválida")
+            displayMenu()
+    return escolha
+
+def filtrarEventosPorCategoria(listaEventos, categoria):
+    resultado = []
+    for evento in listaEventos:
+        if (evento.categoria == categoria):
+            resultado.append(evento)
+
+    return resultado
+
+
+
+def validarData():
     try:
         datetime.strptime(dataStr, "%Y-%m-%d")
         return True
@@ -43,7 +63,6 @@ def adicionarEvento(listaEventos, nome, data, local, categoria):
     listaEventos.append(evento)
 
     return True
-
 
 
 
