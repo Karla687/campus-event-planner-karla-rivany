@@ -80,6 +80,14 @@ def procurarEventoPorNome(listaEventos, nome):
 
     return resultados
 
+def filtrarEventosPorCategoria(listaEventos, categoria):
+    resultados = []
+    for evento in listaEventos:
+        if categoria.lower() in evento["categoria"].lower():
+            resultados.append(evento)
+
+    return resultados
+
 print(procurarEventoPorNome(listaEventos, "Python"))
 
 def deletarEvento(listaEventos, id):
@@ -92,3 +100,46 @@ def deletarEvento(listaEventos, id):
 
 print(deletarEvento(listaEventos, 1))
 print(listaEventos)
+
+def gerarRelatorio(listaEventos):
+    print("\n--- RELATÓRIO DE EVENTOS ---")
+
+    # Total de eventos
+    totalEventos = len(listaEventos)
+    print(f"Total de Eventos: {totalEventos}")
+
+    # Quantidade de eventos por categoria
+    categorias = {}
+
+    for evento in listaEventos:
+        categoria = evento["categoria"]
+
+        if categoria in categorias:
+            categorias[categoria] += 1
+        else:
+            categorias[categoria] = 1
+
+    print(f"Por Categoria: {categorias}")
+
+    # Quantidade de eventos participados
+    participados = 0
+
+    for evento in listaEventos:
+        if evento["participado"] == True:
+            participados += 1
+
+    # Porcentagem de participação
+    if totalEventos > 0:
+        porcentagem = (participados / totalEventos) * 100
+    else:
+        porcentagem = 0
+
+    print(f"Participados: {porcentagem:.0f}% ({participados}/{totalEventos})")
+
+def marcarEventoAtendido(listaEventos, id):
+    for evento in listaEventos:
+        if evento["id"] == id:
+            evento["participado"] = True
+            return True
+
+    return False
